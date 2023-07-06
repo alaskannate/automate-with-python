@@ -8,10 +8,11 @@ def git_add(root_folder_path):
     # Run git status to check if folder needs to be updated. 
     status = subprocess.run(['git', 'status'], capture_output=True, text=True)
 
-    print(status.stdout.strip())
-
     # Run git add command 
-    add = subprocess.run(['git', 'add', '.' ], capture_output=True, text=True)
+    if 'nothing to add' not in status.stdout:
+        add = subprocess.run(['git', 'add', '.' ], capture_output=True, text=True)
+    else: 
+        print("no changes to commit for the folder")   
 
     # Run git commit command with "auto comment"
     commit = subprocess.run(['git', 'commit', '-m','typo fix'], capture_output=True, text=True)
