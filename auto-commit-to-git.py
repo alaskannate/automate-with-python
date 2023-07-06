@@ -14,8 +14,7 @@ def git_commit_to_github(folder_path):
     if 'nothing to commit' not in status.stdout:
         # Run git add command 
         add
-        # # Print the output
-        # print(add.stdout.strip())
+        print("has been pushed to github.")
     else:
         print("Has no changes to commit.")
 
