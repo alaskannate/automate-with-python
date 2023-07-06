@@ -7,9 +7,6 @@ def git_commit_to_github(folder_path):
 
     # Run git status command
     status = subprocess.run(['git', 'status'], capture_output=True, text=True)
-
-    # Print the Git status
-    # print(status.stdout.strip())
     
     add = subprocess.run(['git', 'add', '.'], capture_output=True, text=True)
 
@@ -43,7 +40,7 @@ def parse_folder_for_subfolder_names(root_folder_path):
 
         # Check if the path is a directory
         if os.path.isdir(folder_path) and not folder_name.startswith('.'):
-            print (folder_path)
+            print ("for the Folder" + folder_path)
             git_commit_to_github(folder_path)
         
 
