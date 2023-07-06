@@ -4,7 +4,12 @@ import subprocess
 def git_add(root_folder_path):
     # Change the current working directory to the folder path
     os.chdir(root_folder_path)
-    
+
+    # Run git status to check if folder needs to be updated. 
+    status = subprocess.run(['git', 'status'], capture_output=True, text=True)
+
+    print(status.stdout.strip())
+
     # Run git add command 
     add = subprocess.run(['git', 'add', '.' ], capture_output=True, text=True)
 
