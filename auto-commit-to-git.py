@@ -1,18 +1,29 @@
 import os
 import subprocess
 
-def git_add(root_folder_path):
+def git_commit_to_github(root_folder_path):
     # Change the current working directory to the folder path
     os.chdir(root_folder_path)
 
-    # Run git status to check if folder needs to be updated. 
+    # Run git status command
     status = subprocess.run(['git', 'status'], capture_output=True, text=True)
 
-    # Run git add command 
-    if 'nothing to add' not in status.stdout:
-        add = subprocess.run(['git', 'add', '.' ], capture_output=True, text=True)
-    else: 
-        print("no changes to commit for the folder")   
+    # Print the Git status
+    print(status.stdout.strip())
+
+    add = subprocess.run(['git', 'add', '.'], capture_output=True, text=True)
+
+    # Check if there are any changes to commit
+    if 'nothing to commit' not in status.stdout:
+        # Run git add command 
+        add
+
+        # Print the output
+        print(add.stdout.strip())
+    else:
+        print("No changes to commit.")
+
+    print('\n')
 
     # Run git commit command with "auto comment"
     commit = subprocess.run(['git', 'commit', '-m','typo fix'], capture_output=True, text=True)
@@ -20,7 +31,7 @@ def git_add(root_folder_path):
 
     return print(add.stdout.strip())
 
-def parse_folder_and_add(root_folder_path):
+def parse_folder_and_commit(root_folder_path):
     # Iterate through each subfolder
     for folder_name in os.listdir(root_folder_path):
         folder_path = os.path.join(root_folder_path , folder_name)
@@ -28,7 +39,7 @@ def parse_folder_and_add(root_folder_path):
         # Check if the path is a directory
         if os.path.isdir(folder_path) and not folder_name.startswith('.'):
             print(f"Git added folders name: {folder_name}")
-            git_add(folder_path)
+            git_commit_to_github(folder_path)
 
 
 # Provide the root folder path
@@ -36,4 +47,4 @@ root_folder_path = '/Users/nathanielewing/Desktop/Code/Current-Projects/'
 
 
 # Call the function to parse and display Git status
-parse_folder_and_add(root_folder_path)
+parse_folder_and_commit(root_folder_path)
