@@ -9,7 +9,7 @@ def git_commit_to_github(folder_path):
     status = subprocess.run(['git', 'status'], capture_output=True, text=True)
 
     # Print the Git status
-    print(status.stdout.strip())
+    # print(status.stdout.strip())
     
     add = subprocess.run(['git', 'add', '.'], capture_output=True, text=True)
 
