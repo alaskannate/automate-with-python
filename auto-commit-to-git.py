@@ -14,11 +14,10 @@ def git_commit_to_github(folder_path):
     if 'nothing to commit' not in status.stdout:
         # Run git add command 
         add
-
-        # Print the output
-        print(add.stdout.strip())
+        # # Print the output
+        # print(add.stdout.strip())
     else:
-        print("No changes to commit.")
+        print("Has no changes to commit.")
 
     print('\n')
 
@@ -40,7 +39,7 @@ def parse_folder_for_subfolder_names(root_folder_path):
 
         # Check if the path is a directory
         if os.path.isdir(folder_path) and not folder_name.startswith('.'):
-            print ("The Folder: " + folder_path)
+            print ("The project: " + folder_path)
             git_commit_to_github(folder_path)
         
 
