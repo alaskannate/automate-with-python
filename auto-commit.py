@@ -17,6 +17,7 @@ def add_files_to_git(folder_path, files_to_exclude):
     files_to_add = [file for file in all_files if file not in files_to_exclude]
     for file in files_to_add:
         add_command = subprocess.run(['git', 'add', file], capture_output=True, text=True)
+        print(add_command.returncode)
         if add_command.returncode != 0:
             log_error(f"An error occurred while adding {{file}}: {{add_command.stderr}}")
             return False
@@ -24,18 +25,18 @@ def add_files_to_git(folder_path, files_to_exclude):
 
 def commit_changes(commit_message):
     commit = subprocess.run(['git', 'commit', '-m', commit_message], capture_output=True, text=True)
-    print(commit.returncode)
+    # print(commit.returncode)
     if commit.returncode != 0:
         log_error(f"An error occurred while committing: {{commit.stderr}}")
         return False
     return True
 
-def push_to_github():
-    push_command = subprocess.run(['git', 'push', 'origin', 'main'], capture_output=True, text=True)
-    if push_command.returncode != 0:
-        log_error(f"An error occurred while pushing to GitHub: {{push_command.stderr}}")
-        return False
-    return True
+# def push_to_github():
+#     push_command = subprocess.run(['git', 'push', 'origin', 'main'], capture_output=True, text=True)
+#     if push_command.returncode != 0:
+#         log_error(f"An error occurred while pushing to GitHub: {{push_command.stderr}}")
+#         return False
+#     return True
 
 def determine_commit_message(files_to_add):
     if any(file.endswith('.css') for file in files_to_add):
