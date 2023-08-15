@@ -24,6 +24,7 @@ def add_files_to_git(folder_path, files_to_exclude):
 
 def commit_changes(commit_message):
     commit = subprocess.run(['git', 'commit', '-m', commit_message], capture_output=True, text=True)
+    print(commit.returncode)
     if commit.returncode != 0:
         log_error(f"An error occurred while committing: {{commit.stderr}}")
         return False
