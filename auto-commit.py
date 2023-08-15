@@ -5,12 +5,12 @@ import subprocess
 def log_error(error_message):
     print('Error:', error_message)
 
-def check_git_status(folder_path):
-    status = subprocess.run(['git', 'status'], capture_output=True, text=True)
-    if status.returncode != 0:
-        log_error(f"An error occurred while checking status: {{status.stderr}}")
-        return False
-    return True
+# def check_git_status(folder_path):
+#     status = subprocess.run(['git', 'status'], capture_output=True, text=True)
+#     if status.returncode != 0:
+#         log_error(f"An error occurred while checking status: {{status.stderr}}")
+#         return False
+#     return True
 
 def add_files_to_git(folder_path, files_to_exclude):
     all_files = os.listdir(folder_path)
@@ -31,12 +31,12 @@ def commit_changes(commit_message):
         return False
     return True
 
-# def push_to_github():
-#     push_command = subprocess.run(['git', 'push', 'origin', 'main'], capture_output=True, text=True)
-#     if push_command.returncode != 0:
-#         log_error(f"An error occurred while pushing to GitHub: {{push_command.stderr}}")
-#         return False
-#     return True
+def push_to_github():
+    push_command = subprocess.run(['git', 'push', 'origin', 'main'], capture_output=True, text=True)
+    if push_command.returncode != 0:
+        log_error(f"An error occurred while pushing to GitHub: {{push_command.stderr}}")
+        return False
+    return True
 
 def determine_commit_message(files_to_add):
     if any(file.endswith('.css') for file in files_to_add):
@@ -46,13 +46,15 @@ def determine_commit_message(files_to_add):
     else:
         return 'updated minor typos'
 
+
+# Run script...
 def git_commit_to_github(folder_path, folder_name, files_to_exclude):
     os.chdir(folder_path)
     excluded_files_str = ", ".join(files_to_exclude)
 
-    # Check git status
-    if not check_git_status(folder_path):
-        return
+    # # Check git status
+    # if not check_git_status(folder_path):
+    #     return
 
     # Add files to git
     files_to_add = add_files_to_git(folder_path, files_to_exclude)
