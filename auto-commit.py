@@ -2,13 +2,13 @@
 import os
 import subprocess
 
-def log_error(error_message):
+def log_error(error_message, root_folder_path):
     print('Error:', error_message)
 
 def check_git_status(folder_path):
     status = subprocess.run(['git', 'status'], capture_output=True, text=True)
     if status.returncode != 0:
-        log_error(f"An error occurred while checking status: {{status.stderr}}")
+        log_error(f"An error occurred while checking status: {{status.stderr}}", root_folder_path)
         return False
     return True
 
@@ -18,21 +18,21 @@ def add_files_to_git(folder_path, files_to_exclude):
     for file in files_to_add:
         add_command = subprocess.run(['git', 'add', file], capture_output=True, text=True)
         if add_command.returncode != 0:
-            log_error(f"An error occurred while adding {{file}}: {{add_command.stderr}}")
+            log_error(f"An error occurred while adding {{file}}: {{add_command.stderr}}", root_folder_path)
             return False
     return files_to_add
 
 def commit_changes(commit_message):
     commit = subprocess.run(['git', 'commit', '-m', commit_message], capture_output=True, text=True)
     if commit.returncode != 0:
-        log_error(f"An error occurred while committing: {{commit.stderr}}")
+        log_error(f"An error occurred while committing: {{commit.stderr}}", root_folder_path)
         return False
     return True
 
 def push_to_github():
     push_command = subprocess.run(['git', 'push', 'origin', 'main'], capture_output=True, text=True)
     if push_command.returncode != 0:
-        log_error(f"An error occurred while pushing to GitHub: {{push_command.stderr}}")
+        log_error(f"An error occurred while pushing to GitHub: {{push_command.stderr}}", root_folder_path)
         return False
     return True
 
