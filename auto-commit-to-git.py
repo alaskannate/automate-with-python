@@ -28,8 +28,8 @@ def git_add(files_to_exclude, folder_path):
 
 
 def git_commit(commit_message):
-    result = subprocess.run(['git', 'commit', '-m', commit_message], capture_output=True, text=True)
-    return "nothing to commit, working tree clean" not in result.stdout
+    result = subprocess.run(['git', 'commit', '-m', commit_message], text=True)
+    return result.returncode == 0
 
 
 def git_push_to_github():
