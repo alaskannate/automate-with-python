@@ -28,7 +28,9 @@ def git_add(files_to_exclude, folder_path):
 
 
 def git_commit(commit_message):
-    subprocess.run(['git', 'commit', '-m', commit_message], capture_output=True, text=True)
+    result = subprocess.run(['git', 'commit', '-m', commit_message], capture_output=True, text=True)
+    return "nothing to commit, working tree clean" not in result.stdout
+
 
 def git_push_to_github():
     subprocess.run(['git', 'push', 'origin', 'main'], capture_output=True, text=True)
@@ -46,13 +48,17 @@ def git_commit_to_github(folder_path, folder_name, files_to_exclude):
     commit_message = folder_name.capitalize() + " changes."
 
     # Commit changes
-    git_commit(commit_message)
+    commit_made = git_commit(commit_message)
 
-    # Push changes to GitHub
-    git_push_to_github()
+    if commit_made:
+        # Push changes to GitHub
+        git_push_to_github()
 
-    # Print success message
-    excluded_files_str = ', '.join(files_to_exclude)
-    print(folder_name.capitalize() + " has been pushed to GitHub, excluding files inside of " + excluded_files_str)
+        # Print success message
+        excluded_files_str = ', '.join(files_to_exclude)
+        print(folder_name.capitalize() + " has been pushed to GitHub, excluding files inside of " + excluded_files_str)
+    else:
+        print(folder_name.capitalize() + " has no changes to commit.")
+
 
 parse_through_subfolders(root_folder_path, files_to_exclude)
