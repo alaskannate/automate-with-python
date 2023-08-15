@@ -45,7 +45,7 @@ def git_commit_to_github(folder_path, folder_name, files_to_exclude):
     git_add(files_to_exclude, folder_path)
 
     # Define the commit message
-    commit_message = folder_name.capitalize() + " changes."
+    commit_message = folder_name.capitalize() + "Basic changes."
 
     # Commit changes
     commit_made = git_commit(commit_message)
