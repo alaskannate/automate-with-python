@@ -5,19 +5,20 @@ import subprocess
 def log_error(error_message):
     print('Error:', error_message)
 
-# def check_git_status(folder_path):
-#     status = subprocess.run(['git', 'status'], capture_output=True, text=True)
-#     if status.returncode != 0:
-#         log_error(f"An error occurred while checking status: {{status.stderr}}")
-#         return False
-#     return True
+def check_git_status(folder_path):
+    status = subprocess.run(['git', 'status'], capture_output=True, text=True)
+    print(status.stdout)
+    if status.returncode != 0:
+        log_error(f"An error occurred while checking status: {{status.stderr}}")
+        return False
+    return True
 
 def add_files_to_git(folder_path, files_to_exclude):
     all_files = os.listdir(folder_path)
     files_to_add = [file for file in all_files if file not in files_to_exclude]
     for file in files_to_add:
         add_command = subprocess.run(['git', 'add', file], capture_output=True, text=True)
-        print(add_command.returncode)
+        # print(add_command.returncode)
         if add_command.returncode != 0:
             log_error(f"An error occurred while adding {{file}}: {{add_command.stderr}}")
             return False
@@ -89,7 +90,7 @@ def parse_folder_for_subfolder_names(root_folder_path):
 # Provide the root folder path
 root_folder_path = '/Users/nathanielewing/Desktop/Code/My-Current-Projects/'
 # List files to ignore 
-files_to_exclude = ['.gitignore', 'error_ledger.txt']
+files_to_exclude = ['.gitignore', 'error_ledger.txt', 'auto-commit.py', 'auto-commit-to-git.py']
 
 # Call the function to parse and display Git status
 parse_folder_for_subfolder_names(root_folder_path)
